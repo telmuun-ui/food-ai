@@ -7,21 +7,21 @@ const openai = new OpenAI({
 export const POST = async (req: Request) => {
   try {
     const { imageUrl, prompt } = await req.json();
-
+    console.log({ imageUrl });
     const response = await openai.chat.completions.create({
       model: "gpt-4.1-mini",
-          messages: [
+      messages: [
         {
           role: "user",
           content: [
-            { 
-              type: "text", 
-              text: prompt || "Монгол хэлээр тайлбарлаж бичнэ үү." 
+            {
+              type: "text",
+              text: prompt || "Монгол хэлээр тайлбарлаж бичнэ үү.",
             },
             {
               type: "image_url",
               image_url: {
-                url: imageUrl, 
+                url: imageUrl,
               },
             },
           ],
@@ -31,9 +31,12 @@ export const POST = async (req: Request) => {
     });
 
     const caption = response.choices[0]?.message?.content;
-    return NextResponse.json({output: caption})
+    return NextResponse.json({ output: caption });
   } catch (error: any) {
     console.error(error);
-    return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Something went wrong" },
+      { status: 500 },
+    );
   }
 };

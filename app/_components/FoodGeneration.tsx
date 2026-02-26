@@ -47,11 +47,11 @@ export const FoodGeneration = () => {
         setResultImage(imageData.image);
       }
 
-      if (extractData.ingredients) {
-        setExtractedInfo(extractData.ingredients);
+      if (extractData.result) {
+        setExtractedInfo(extractData.result);
       }
 
-      if (!imageData.image && !extractData.ingredients) {
+      if (!imageData.image && !extractData.result) {
         throw new Error("Both services failed");
       }
 
